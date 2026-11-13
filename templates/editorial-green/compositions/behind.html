@@ -1,0 +1,48 @@
+<template>
+  <style>
+    /*FONTS*/
+    #root { position: absolute; inset: 0; }
+    #bh-plate {
+      position: absolute; left: 0; top: 0; width: 1080px; height: 1920px;
+      background: radial-gradient(120% 80% at 50% 35%, #24472f 0%, #1f3d2b 45%, #142a1d 100%);
+    }
+    .giant {
+      position: absolute; left: 0; width: 1080px; text-align: center;
+      font-family: "NotoSerifKR", serif; font-weight: 600; color: #f1ebdd;
+      letter-spacing: -0.045em; line-height: 1; white-space: nowrap;
+    }
+    .giant span { display: inline-block; }
+    #bh-views { top: 196px; font-size: 290px; }
+    #bh-structure { top: 186px; font-size: 330px; }
+    #bh-sales { top: 250px; font-size: 250px; color: #d9c27a; }
+  </style>
+  <div id="root" data-composition-id="behind" data-width="1080" data-height="1920">
+    <div id="bh-plate" class="clip" data-start="2.116" data-duration="2.586" data-track-index="0"></div>
+    <div id="bh-views" class="giant clip" data-start="0.75" data-duration="1.36" data-track-index="1"
+      data-layout-allow-overlap><span>조</span><span>회</span><span>수</span></div>
+    <div id="bh-structure" class="giant clip" data-start="6.16" data-duration="0.86" data-track-index="1"
+      data-layout-allow-overlap><span>구</span><span>조</span></div>
+    <div id="bh-sales" class="giant clip" data-start="13.0" data-duration="1.16" data-track-index="2"
+      data-layout-allow-overlap><span>매</span><span>출</span><span>로</span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const letters = (sel, t, gap) =>
+      tl.fromTo(`${sel} span`, { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power2.out", stagger: gap }, t);
+
+    // green world floods up from the bottom (colour flood), the room stays under the person
+    tl.fromTo("#bh-plate", { clipPath: "inset(100% 0% 0% 0%)" },
+      { clipPath: "inset(0% 0% 0% 0%)", duration: 0.32, ease: "power2.inOut" }, 2.116);
+
+    letters("#bh-views", 0.75, 0.09);
+
+    letters("#bh-structure", 6.16, 0.12);
+    tl.to("#bh-structure", { opacity: 0, filter: "blur(14px)", duration: 0.18, ease: "power3.in" }, 6.82);
+
+    letters("#bh-sales", 13.0, 0.08);
+    tl.to("#bh-sales", { opacity: 0, filter: "blur(10px)", duration: 0.16, ease: "power3.in" }, 13.98);
+
+    window.__timelines["behind"] = tl;
+  </script>
+</template>

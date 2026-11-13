@@ -1,0 +1,4 @@
+{"adjust":{"exposure":0.1,"contrast":-0.06,"highlights":-0.16,"shadows":0.14,"blacks":0.06,"temperature":0.3,"tint":0.04,"saturation":0.02,"vibrance":0.08},
+ "wheels":{"shadows":{"hue":25,"amount":0.1,"level":0.02},"midtones":{"hue":32,"amount":0.08,"level":0.01},"highlights":{"hue":42,"amount":0.08,"level":0}},
+ "curves":{"master":[[0,0.05],[0.25,0.27],[0.75,0.79],[1,0.97]]},
+ "details":{"vignette":0.14,"grain":0.05}}

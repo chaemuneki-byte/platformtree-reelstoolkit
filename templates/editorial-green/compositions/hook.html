@@ -1,0 +1,81 @@
+<template>
+  <style>
+    /*FONTS*/
+    #root { position: absolute; inset: 0; }
+    .line {
+      position: absolute; left: 0; width: 1080px; text-align: center; white-space: nowrap;
+      color: #f1ebdd; line-height: 1;
+    }
+    .line .w { display: inline-block; }
+    #hk-notsell .w { opacity: 0; }
+    /* B — heavy sans on the green world */
+    #hk-sales { top: 196px; font: 900 168px/1 "NotoSansKR", sans-serif; letter-spacing: -0.06em; }
+    #hk-notsell { top: 378px; font: 900 92px/1 "NotoSansKR", sans-serif; letter-spacing: -0.05em; }
+    /* C — boxed labels + gold serif payoff */
+    #hk-labels { top: 200px; font: 900 64px/1 "NotoSansKR", sans-serif; letter-spacing: -0.04em; }
+    #hk-labels .w {
+      background: #f1ebdd; color: #1f3d2b; padding: 10px 18px 12px; margin: 0 6px; border-radius: 2px;
+    }
+    #hk-know { top: 304px; font: 600 118px/1.05 "NotoSerifKR", serif; letter-spacing: -0.04em; color: #d9c27a; }
+    #hk-know span { display: inline-block; }
+    /* reversal — a struck label */
+    #hk-views2 { top: 214px; font: 900 76px/1 "NotoSansKR", sans-serif; letter-spacing: -0.04em; }
+    #hk-views2 .tag {
+      display: inline-block; position: relative; background: #1f3d2b; color: #f1ebdd;
+      padding: 10px 22px 14px; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,.28);
+    }
+    #hk-strike { position: absolute; left: -26px; top: 22px; width: calc(100% + 52px); height: 70px; overflow: visible; }
+    #hk-strike path { fill: none; stroke: #d2452f; stroke-width: 11; stroke-linecap: round; }
+    .eyebrow {
+      position: absolute; left: 0; width: 1080px; text-align: center;
+      font: 500 22px/1 "IBM Plex Mono", "NotoSansKR", monospace; letter-spacing: 0.22em; color: rgba(241,235,221,.62);
+    }
+    #hk-eyebrow { top: 172px; font-size: 28px; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <div id="hk-sales" class="line clip" data-start="2.116" data-duration="1.38" data-track-index="0"><span class="w">매출이</span></div>
+    <div id="hk-notsell" class="line clip" data-start="2.62" data-duration="0.876" data-track-index="1"
+      ><span class="w">안</span> <span class="w">나오는</span> <span class="w">분들</span></div>
+
+    <div id="hk-labels" class="line clip" data-start="3.5" data-duration="1.2" data-track-index="0"
+      ><span class="w">이거</span><span class="w">꼭</span></div>
+    <div id="hk-know" class="line clip" data-start="4.04" data-duration="0.66" data-track-index="1"
+      ><span>아</span><span>셔</span><span>야</span> <span>합</span><span>니</span><span>다</span><span>.</span></div>
+
+    <div id="hk-eyebrow" class="eyebrow clip" data-start="5.0" data-duration="1.14" data-track-index="2">WHERE BLOG REVENUE COMES FROM</div>
+    <div id="hk-views2" class="line clip" data-start="5.4" data-duration="0.76" data-track-index="0">
+      <span class="tag">조회수<svg id="hk-strike" viewBox="0 0 300 70" preserveAspectRatio="none"><path id="hk-strike-path" d="M6 44 C 70 30, 150 40, 210 30 S 280 26, 294 22"/></svg></span>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const wordsIn = (sel, t, gap) =>
+      tl.fromTo(sel, { opacity: 0, filter: "blur(8px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out", stagger: gap }, t);
+    const out = (sel, t) => tl.to(sel, { opacity: 0, filter: "blur(10px)", duration: 0.14, ease: "power3.in" }, t);
+
+    // 매출이 / 안 나오는 분들 — each word on its spoken beat
+    wordsIn("#hk-sales .w", 2.13, 0);
+    const ns = document.querySelectorAll("#hk-notsell .w");
+    [2.657, 2.858, 3.178].forEach((t, i) =>
+      tl.fromTo(ns[i], { opacity: 0, filter: "blur(8px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power2.out", immediateRender: true }, t));
+    out(["#hk-sales", "#hk-notsell"], 3.36);
+
+    // 이거 / 꼭 — labels snap in on their words, then the gold payoff
+    tl.fromTo("#hk-labels .w", { opacity: 0, scale: 0.86 },
+      { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(1.6)", stagger: 0.30 }, 3.519);
+    tl.fromTo("#hk-know span", { opacity: 0, filter: "blur(5px)" },
+      { opacity: 1, filter: "blur(0px)", duration: 0.1, ease: "power2.out", stagger: 0.045 }, 4.06);
+
+    // reversal: 조회수 is crossed out on 아니라
+    tl.fromTo("#hk-eyebrow", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 5.0);
+    tl.fromTo("#hk-views2 .tag", { opacity: 0, y: 14, filter: "blur(6px)" },
+      { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.32, ease: "expo.out" }, 5.424);
+    tl.fromTo("#hk-strike-path", { strokeDasharray: 320, strokeDashoffset: 320 },
+      { strokeDashoffset: 0, duration: 0.24, ease: "power2.out" }, 5.885);
+    out(["#hk-views2", "#hk-eyebrow"], 6.0);
+
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

@@ -1,0 +1,4 @@
+{"adjust":{"exposure":0.06,"contrast":-0.04,"highlights":-0.1,"shadows":0.08,"blacks":0.03,"temperature":0.15,"tint":0.02,"saturation":0,"vibrance":0.04},
+ "wheels":{"shadows":{"hue":25,"amount":0.05,"level":0.0},"highlights":{"hue":40,"amount":0.05,"level":0}},
+ "lut":{"src":".media/luts/lut_001.cube","intensity":0.65},
+ "details":{"vignette":0.12,"grain":0.05}}

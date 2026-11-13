@@ -1,0 +1,71 @@
+<template>
+  <style>
+    /*FONTS*/
+    #root { position: absolute; inset: 0; }
+    .cap { position: absolute; left: 0; top: 1068px; width: 1080px; text-align: center; overflow: visible; }
+    .cap span {
+      position: relative; display: inline-block; color: #fff; white-space: nowrap;
+      font: 600 58px/1.2 "Pretendard", sans-serif; letter-spacing: -0.04em;
+      text-shadow: 0 2px 4px rgba(30, 16, 10, 0.55), 0 4px 18px rgba(30, 16, 10, 0.45);
+    }
+    .cap.emph { top: 1040px; }
+    .cap.emph span { font-weight: 800; font-size: 84px; letter-spacing: -0.05em; }
+    .ul { position: absolute; left: -6px; bottom: -14px; width: calc(100% + 12px); height: 24px; overflow: visible; }
+    .ul path { fill: none; stroke: #ffd23f; stroke-width: 7; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+  </style>
+  <div id="root" data-composition-id="captions" data-width="1080" data-height="1920">
+    <div id="cp0" class="cap clip" data-start="0.100" data-duration="0.633" data-track-index="0"><span>여러분 블로그</span></div>
+    <div id="cp1" class="cap clip" data-start="0.733" data-duration="1.343" data-track-index="1"><span>조회수는 잘 나오는데</span></div>
+    <div id="cp2" class="cap emph clip" data-start="2.076" data-duration="1.403" data-track-index="0" data-layout-allow-overlap><span>매출이 안 나오는 분들<svg class="ul" preserveAspectRatio="none" viewBox="0 0 400 24"><path id="ul2" d=""/></svg></span></div>
+    <div id="cp3" class="cap clip" data-start="3.479" data-duration="0.541" data-track-index="1"><span>이거 꼭</span></div>
+    <div id="cp4" class="cap emph clip" data-start="4.020" data-duration="0.642" data-track-index="0" data-layout-allow-overlap><span>아셔야 합니다.<svg class="ul" preserveAspectRatio="none" viewBox="0 0 400 24"><path id="ul4" d=""/></svg></span></div>
+    <div id="cp5" class="cap clip" data-start="4.662" data-duration="0.738" data-track-index="1"><span>블로그 수익은</span></div>
+    <div id="cp6" class="cap clip" data-start="6.987" data-duration="0.822" data-track-index="0"><span>유입용 키워드,</span></div>
+    <div id="cp7" class="cap clip" data-start="7.809" data-duration="0.903" data-track-index="1"><span>전환용 키워드,</span></div>
+    <div id="cp8" class="cap clip" data-start="8.712" data-duration="0.541" data-track-index="0"><span>글 끝에</span></div>
+    <div id="cp9" class="cap clip" data-start="9.253" data-duration="0.762" data-track-index="1"><span>고객 이동할</span></div>
+    <div id="cp10" class="cap clip" data-start="10.015" data-duration="0.902" data-track-index="0"><span>전환 루트 만들기</span></div>
+    <div id="cp11" class="cap clip" data-start="10.917" data-duration="0.962" data-track-index="1"><span>이 세 가지가</span></div>
+    <div id="cp12" class="cap clip" data-start="11.879" data-duration="0.621" data-track-index="0"><span>연결돼야</span></div>
+    <div id="cp13" class="cap clip" data-start="12.500" data-duration="0.482" data-track-index="1"><span>조회수가</span></div>
+    <div id="cp14" class="cap emph clip" data-start="12.982" data-duration="1.112" data-track-index="0" data-layout-allow-overlap><span>매출로 바뀝니다.<svg class="ul" preserveAspectRatio="none" viewBox="0 0 400 24"><path id="ul14" d=""/></svg></span></div>
+    <div id="cp15" class="cap clip" data-start="14.144" data-duration="1.624" data-track-index="1"><span>댓글에 수익화 남기시면</span></div>
+    <div id="cp16" class="cap clip" data-start="15.768" data-duration="1.063" data-track-index="0"><span>제가 실제로 쓰는</span></div>
+    <div id="cp17" class="cap clip" data-start="16.831" data-duration="1.089" data-track-index="1"><span>수익 구조 설계 템플릿</span></div>
+    <div id="cp18" class="cap emph clip" data-start="17.920" data-duration="0.660" data-track-index="0" data-layout-allow-overlap><span>보내드릴게요.<svg class="ul" preserveAspectRatio="none" viewBox="0 0 400 24"><path id="ul18" d=""/></svg></span></div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    const hash = (n, seed) => { const x = Math.sin(n * 127.1 + seed * 311.7) * 43758.5453; return (x - Math.floor(x)) * 2 - 1; };
+    // plain captions cut in; emphasised lines land with a small settle and a hand-drawn underline
+    const pop = (sel, t, emph) => emph
+      ? tl.fromTo(sel, { opacity: 0, scale: 0.88 }, { opacity: 1, scale: 1, duration: 0.18, ease: "back.out(1.8)" }, t)
+      : tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: 0.05, ease: "none" }, t);
+    const line = (id, seed, t) => {
+      let d = "M 2 " + (12 + hash(0, seed) * 3).toFixed(1);
+      for (let i = 1; i <= 5; i++) d += " Q " + (i * 80 - 40 + hash(i, seed) * 10).toFixed(1) + " " + (12 + (i % 2 ? -6 : 6) + hash(i + 9, seed) * 2).toFixed(1) + " " + (i * 80) + " " + (12 + hash(i + 20, seed) * 3).toFixed(1);
+      const p = document.getElementById(id); p.setAttribute("d", d);
+      tl.fromTo(p, { strokeDasharray: 520, strokeDashoffset: 520 }, { strokeDashoffset: 0, duration: 0.32, ease: "power2.inOut", immediateRender: true }, t);
+    };
+    pop("#cp0 span", 0.100, 0);
+    pop("#cp1 span", 0.733, 0);
+    pop("#cp2 span", 2.076, 1); line("ul2", 2, 2.276);
+    pop("#cp3 span", 3.479, 0);
+    pop("#cp4 span", 4.020, 1); line("ul4", 4, 4.220);
+    pop("#cp5 span", 4.662, 0);
+    pop("#cp6 span", 6.987, 0);
+    pop("#cp7 span", 7.809, 0);
+    pop("#cp8 span", 8.712, 0);
+    pop("#cp9 span", 9.253, 0);
+    pop("#cp10 span", 10.015, 0);
+    pop("#cp11 span", 10.917, 0);
+    pop("#cp12 span", 11.879, 0);
+    pop("#cp13 span", 12.500, 0);
+    pop("#cp14 span", 12.982, 1); line("ul14", 14, 13.182);
+    pop("#cp15 span", 14.144, 0);
+    pop("#cp16 span", 15.768, 0);
+    pop("#cp17 span", 16.831, 0);
+    pop("#cp18 span", 17.920, 1); line("ul18", 18, 18.120);
+    window.__timelines["captions"] = tl;
+  </script>
+</template>

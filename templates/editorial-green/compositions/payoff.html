@@ -1,0 +1,95 @@
+<template>
+  <style>
+    /*FONTS*/
+    #root { position: absolute; inset: 0; }
+    /* conclusion label above the behind-the-head 매출로 */
+    #po-views {
+      position: absolute; left: 0; top: 180px; width: 1080px; text-align: center; white-space: nowrap;
+      font: 900 54px/1 "NotoSansKR", sans-serif; letter-spacing: -0.04em;
+    }
+    #po-views span { display: inline-block; background: #f1ebdd; color: #1f3d2b; padding: 9px 18px 11px; border-radius: 2px; }
+    #po-views b { display: inline-block; font: 500 44px/1 "IBM Plex Mono", "NotoSansKR", monospace; color: #d9c27a; margin-left: 14px; vertical-align: middle; }
+
+    /* CTA pill, the way the reference asks for a comment */
+    #po-pill {
+      position: absolute; left: 0; top: 186px; width: 1080px; text-align: center;
+      font: 800 50px/1 "NotoSansKR", sans-serif; letter-spacing: -0.035em; color: #111;
+    }
+    #po-pill .ln { display: inline-block; background: #fff; padding: 10px 22px 12px; border-radius: 12px; margin: 0 0 8px; }
+    #po-pill .k { color: #1f3d2b; }
+
+    /* comment composer on the chest */
+    #po-input {
+      position: absolute; left: 110px; top: 924px; width: 860px; height: 108px;
+      background: #fbf8f1; border-radius: 56px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+      display: flex; align-items: center; padding: 0 18px 0 22px;
+    }
+    #po-avatar { width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, #2e5a40, #1f3d2b); flex: 0 0 68px; }
+    #po-field { flex: 1 1 auto; margin-left: 22px; }
+    #po-meta { position: relative; height: 24px; font: 500 24px/1 "IBM Plex Mono", "NotoSansKR", monospace; letter-spacing: 0.14em; color: #8a8a80; margin-bottom: 10px; }
+    #po-meta span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+    #po-meta-b { opacity: 0; color: #2e5a40; }
+    #po-text { font: 800 44px/1 "NotoSansKR", sans-serif; letter-spacing: -0.03em; color: #1f3d2b; white-space: nowrap; }
+    #po-text span { display: inline-block; }
+    #po-caret { display: inline-block; width: 3px; height: 42px; background: #1f3d2b; vertical-align: -6px; margin-left: 4px; }
+    #po-send { width: 76px; height: 76px; border-radius: 50%; background: #1f3d2b; flex: 0 0 76px; display: flex; align-items: center; justify-content: center; }
+    #po-send svg { width: 34px; height: 34px; }
+
+    /* reply from the creator */
+    #po-reply {
+      position: absolute; left: 330px; top: 1052px; width: 640px; height: 86px;
+      background: rgba(18, 38, 27, 0.92); border: 1px solid rgba(241, 235, 221, 0.16); border-radius: 46px;
+      display: flex; align-items: center; padding: 0 30px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+    #po-reply-dot { width: 14px; height: 14px; border-radius: 50%; background: #d9c27a; margin-right: 18px; flex: 0 0 14px; }
+    #po-reply-txt { font: 700 36px/1 "NotoSansKR", sans-serif; letter-spacing: -0.03em; color: #f1ebdd; white-space: nowrap; }
+  </style>
+  <div id="root" data-composition-id="payoff" data-width="1080" data-height="1920">
+    <div id="po-views" class="clip" data-start="0" data-duration="1.6" data-track-index="0"><span>조회수가</span><b>→</b></div>
+
+    <div id="po-pill" class="clip" data-start="1.644" data-duration="4.416" data-track-index="0">
+      <div class="ln">댓글에 <span class="k">"수익화"</span> 남기면</div><br />
+      <div class="ln">수익 구조 템플릿 보내드려요</div>
+    </div>
+
+    <div id="po-input" class="clip" data-start="2.15" data-duration="3.91" data-track-index="1" data-layout-allow-overlap>
+      <div id="po-avatar"></div>
+      <div id="po-field">
+        <div id="po-meta"><span id="po-meta-a">ADD A COMMENT</span><span id="po-meta-b">YOU · NOW</span></div>
+        <div id="po-text"><span>수</span><span>익</span><span>화</span><i id="po-caret"></i></div>
+      </div>
+      <div id="po-send"><svg viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="#f1ebdd" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <div id="po-reply" class="clip" data-start="5.03" data-duration="1.03" data-track-index="2">
+      <div id="po-reply-dot"></div><div id="po-reply-txt">템플릿 보내는 중…</div>
+    </div>
+  </div>
+  <script>
+    // local time: 0 = 12.54 s in the film
+    const tl = gsap.timeline({ paused: true });
+    const T = (abs) => Math.max(0, +(abs - 12.54).toFixed(3));
+
+    tl.fromTo("#po-views span", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out" }, T(12.56));
+    tl.fromTo("#po-views b", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.24, ease: "expo.out" }, T(12.9));
+    tl.to("#po-views", { opacity: 0, filter: "blur(10px)", duration: 0.14, ease: "power3.in" }, T(13.98));
+
+    // CTA pill — line by line
+    tl.fromTo("#po-pill .ln", { opacity: 0, y: 10, filter: "blur(6px)" },
+      { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.3, ease: "expo.out", stagger: 0.12 }, T(14.2));
+
+    // composer arrives, the keyword is typed on 수익화, sent on 남기시면
+    tl.fromTo("#po-input", { opacity: 0, y: 26, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "expo.out" }, T(14.69));
+    tl.fromTo("#po-text span", { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.09, immediateRender: true }, T(14.78));
+    tl.fromTo("#po-send", { scale: 1 }, { scale: 0.86, duration: 0.08, ease: "power2.in" }, T(15.24));
+    tl.to("#po-send", { scale: 1, duration: 0.3, ease: "back.out(2)" }, T(15.32));
+    tl.to("#po-meta-a", { opacity: 0, duration: 0.08 }, T(15.3));
+    tl.fromTo("#po-meta-b", { opacity: 0 }, { opacity: 1, duration: 0.12 }, T(15.36));
+    tl.set("#po-caret", { opacity: 0 }, T(15.31));
+
+    // the creator answers on 템플릿
+    tl.fromTo("#po-reply", { opacity: 0, y: 18, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "expo.out" }, T(17.57));
+
+    window.__timelines["payoff"] = tl;
+  </script>
+</template>

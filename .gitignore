@@ -1,0 +1,32 @@
+# dependencies and environments
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+
+# tool state
+.hyperframes/
+.hypit/
+.media/
+renders/
+drafts/
+
+# media never belongs in this repo (footage, references, cutouts, audio)
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.wav
+*.mp3
+*.m4a
+*.png
+*.jpg
+*.jpeg
+!docs/img/*.png
+
+# generated per-project assets
+templates/*/assets/
+luts/*.cube
+
+# optional tools installed by setup
+.funclip/

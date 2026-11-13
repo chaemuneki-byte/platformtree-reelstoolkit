@@ -1,0 +1,71 @@
+<template>
+  <style>
+    /*FONTS*/
+    #root { position: absolute; inset: 0; }
+    /* a dark editorial panel resting on the chest, face stays clear */
+    #st-panel {
+      position: absolute; left: 84px; top: 914px; width: 912px; height: 300px;
+      background: rgba(18, 38, 27, 0.9); border: 1px solid rgba(241, 235, 221, 0.14);
+      border-radius: 26px; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(18px); overflow: hidden;
+    }
+    #st-head {
+      position: absolute; left: 40px; right: 40px; top: 24px; height: 26px;
+      display: flex; justify-content: space-between;
+      font: 500 26px/1 "IBM Plex Mono", "NotoSansKR", monospace; letter-spacing: 0.16em; color: rgba(241, 235, 221, 0.55);
+    }
+    #st-rule-top { position: absolute; left: 40px; right: 40px; top: 62px; height: 1px; background: rgba(241, 235, 221, 0.14); }
+    .row { position: absolute; left: 40px; right: 40px; height: 72px; display: flex; align-items: center; }
+    #st-r1 { top: 72px; } #st-r2 { top: 146px; } #st-r3 { top: 220px; }
+    .node {
+      position: relative; width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid rgba(217, 194, 122, 0.7); flex: 0 0 22px; margin-right: 30px; background: #12261b;
+    }
+    .node i { position: absolute; inset: 3px; border-radius: 50%; background: #d9c27a; opacity: 0; }
+    .num { font: 500 34px/1 "NotoSerifKR", serif; color: #d9c27a; width: 74px; flex: 0 0 74px; }
+    .ttl { font: 800 42px/1 "NotoSansKR", sans-serif; letter-spacing: -0.04em; color: #f1ebdd; flex: 1 1 auto; white-space: nowrap; }
+    .tag { font: 500 26px/1 "IBM Plex Mono", "NotoSansKR", monospace; letter-spacing: 0.12em; color: rgba(241, 235, 221, 0.66); white-space: nowrap; }
+    #st-wire {
+      position: absolute; left: 50px; top: 108px; width: 2px; height: 148px;
+      background: linear-gradient(#d9c27a, #c9a95a); transform-origin: 50% 0%;
+    }
+  </style>
+  <div id="root" data-composition-id="structure" data-width="1080" data-height="1920">
+    <div id="st-panel" class="clip" data-start="0" data-duration="5.51" data-track-index="0" data-layout-allow-overlap>
+      <div id="st-head"><span>BLOG REVENUE · STRUCTURE</span><span>3 STEPS</span></div>
+      <div id="st-rule-top"></div>
+      <div id="st-wire"></div>
+      <div id="st-r1" class="row"><div class="node"><i></i></div><div class="num">01</div><div class="ttl">유입용 키워드</div><div class="tag">TRAFFIC</div></div>
+      <div id="st-r2" class="row"><div class="node"><i></i></div><div class="num">02</div><div class="ttl">전환용 키워드</div><div class="tag">INTENT</div></div>
+      <div id="st-r3" class="row"><div class="node"><i></i></div><div class="num">03</div><div class="ttl">전환 루트</div><div class="tag">글 끝 → 고객 이동</div></div>
+    </div>
+  </div>
+  <script>
+    // local time: 0 = 7.027 s in the film
+    const tl = gsap.timeline({ paused: true });
+    const T = (abs) => Math.max(0, +(abs - 7.027).toFixed(3));
+
+    tl.fromTo("#st-panel", { opacity: 0, y: 24, scale: 0.97, filter: "blur(10px)" },
+      { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.42, ease: "expo.out" }, 0);
+    tl.fromTo(["#st-head", "#st-rule-top"], { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0.12);
+    tl.set("#st-wire", { scaleY: 0 }, 0);
+
+    const row = (sel, abs) =>
+      tl.fromTo(`${sel} > *`, { opacity: 0, filter: "blur(6px)" },
+        { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power2.out", stagger: 0.06, immediateRender: true }, T(abs));
+    row("#st-r1", 7.06);
+    row("#st-r2", 7.849);
+    row("#st-r3", 8.752);
+
+    // 연결돼야 — the gold wire runs through the three nodes, each lighting as it passes
+    tl.to("#st-wire", { scaleY: 1, duration: 0.36, ease: "power2.inOut" }, T(11.919));
+    tl.fromTo("#st-r1 .node i", { opacity: 0 }, { opacity: 1, duration: 0.08 }, T(11.93));
+    tl.fromTo("#st-r2 .node i", { opacity: 0 }, { opacity: 1, duration: 0.08 }, T(12.09));
+    tl.fromTo("#st-r3 .node i", { opacity: 0 }, { opacity: 1, duration: 0.08 }, T(12.25));
+
+    // leave clean before the payoff
+    tl.to("#st-panel", { opacity: 0, filter: "blur(12px)", y: -10, duration: 0.14, ease: "power3.in" }, T(12.39));
+
+    window.__timelines["structure"] = tl;
+  </script>
+</template>
